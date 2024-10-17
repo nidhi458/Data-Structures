@@ -49,7 +49,7 @@ int main(){
         printf("\n 3.display");
         printf("\n 4.exit");
 
-        printf("\n enter the first option");
+        printf("\n enter the option");
         scanf("%d",&op);
         switch(option)
         {
