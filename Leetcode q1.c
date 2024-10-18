@@ -6,7 +6,7 @@ void insert(int value, int stack1[], int *top1) {
         printf("Queue Overflow\n");
     } else {
         stack1[++(*top1)] = value;
-        printf("inserted %d\n", value);
+        printf("Inserted %d\n", value);
     }
 }
 
@@ -23,8 +23,29 @@ int delete(int stack1[], int *top1, int stack2[], int *top2) {
     }
     
     int value = stack2[(*top2)--];
-    printf("deleted element: %d\n", value);
+    printf("Deleted element: %d\n", value);
     return value;
+}
+
+void display(int stack1[], int top1, int stack2[], int top2) {
+    if (top1 == -1 && top2 == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+    
+    printf("Queue elements: ");
+    
+    // Display elements in stack2 (those that are ready for dequeue)
+    for (int i = top2; i >= 0; i--) {
+        printf("%d ", stack2[i]);
+    }
+    
+    // Display elements in stack1 (those that are yet to be moved to stack2)
+    for (int i = 0; i <= top1; i++) {
+        printf("%d ", stack1[i]);
+    }
+    
+    printf("\n");
 }
 
 int main() {
@@ -36,7 +57,8 @@ int main() {
         printf("\nQueue using Stacks Menu\n");
         printf("1. Insert\n");
         printf("2. Delete\n");
-        printf("3. Exit\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         
@@ -50,6 +72,9 @@ int main() {
                 delete(stack1, &top1, stack2, &top2);
                 break;
             case 3:
+                display(stack1, top1, stack2, top2);
+                break;
+            case 4:
                 return 0;
             default:
                 printf("Invalid choice\n");
