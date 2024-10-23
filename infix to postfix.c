@@ -1,18 +1,15 @@
 #include <stdio.h>
 #define MAX 100
 
-char stack[MAX];
-int top = -1;
-
-void push(char c) {
-    if (top < MAX - 1) {
-        stack[++top] = c;
+void push(char stack[], int *top, char c) {
+    if (*top < MAX - 1) {
+        stack[++(*top)] = c;
     }
 }
 
-char pop() {
-    if (top >= 0) {
-        return stack[top--];
+char pop(char stack[], int *top) {
+    if (*top >= 0) {
+        return stack[(*top)--];
     } else {
         return '\0';
     }
@@ -32,6 +29,8 @@ int isOperand(char c) {
 }
 
 void infixtopostfix(char infix[], char postfix[]) {
+    char stack[MAX];
+    int top = -1;
     int i = 0, j = 0;
     char token;
 
@@ -39,24 +38,23 @@ void infixtopostfix(char infix[], char postfix[]) {
         if (isOperand(token)) {
             postfix[j++] = token;
         } else if (token == '(') {
-            push(token);
+            push(stack, &top, token);
         } else if (token == ')') {
             while (top != -1 && stack[top] != '(') {
-                postfix[j++] = pop();
+                postfix[j++] = pop(stack, &top);
             }
-            pop(); 
+            pop(stack, &top); 
         } else { 
             while (top != -1 && precedence(stack[top]) >= precedence(token)) {
-                postfix[j++] = pop();
+                postfix[j++] = pop(stack, &top);
             }
-            push(token);
+            push(stack, &top, token);
         }
         i++;
     }
 
-    
     while (top != -1) {
-        postfix[j++] = pop();
+        postfix[j++] = pop(stack, &top);
     }
     postfix[j] = '\0';
 }
