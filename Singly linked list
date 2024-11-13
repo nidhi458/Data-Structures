@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the Node structure
+
 struct Node {
     int data;
     struct Node* next;
 };
 
-// Function to create a new node
+
 struct Node* createNode(int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
@@ -15,14 +15,12 @@ struct Node* createNode(int data) {
     return newNode;
 }
 
-// Function to insert a new element at the beginning of the singly linked list
 void insertAtFirst(struct Node** head, int data) {
     struct Node* newNode = createNode(data);
     newNode->next = *head;
     *head = newNode;
 }
 
-// Function to insert a new element at the end of the singly linked list
 void insertAtEnd(struct Node** head, int data) {
     struct Node* newNode = createNode(data);
     if (*head == NULL) {
@@ -36,7 +34,6 @@ void insertAtEnd(struct Node** head, int data) {
     temp->next = newNode;
 }
 
-// Function to insert a new element at a specific position in the singly linked list
 void insertAtPosition(struct Node** head, int data, int position) {
     struct Node* newNode = createNode(data);
     if (position == 0) {
@@ -56,7 +53,6 @@ void insertAtPosition(struct Node** head, int data, int position) {
     temp->next = newNode;
 }
 
-// Function to delete the first node of the singly linked list
 void deleteFromFirst(struct Node** head) {
     if (*head == NULL) {
         printf("List is empty\n");
@@ -67,7 +63,6 @@ void deleteFromFirst(struct Node** head) {
     free(temp);
 }
 
-// Function to delete the last node of the singly linked list
 void deleteFromEnd(struct Node** head) {
     if (*head == NULL) {
         printf("List is empty\n");
@@ -86,7 +81,6 @@ void deleteFromEnd(struct Node** head) {
     temp->next = NULL;
 }
 
-// Function to delete a node at a specific position in the singly linked list
 void deleteAtPosition(struct Node** head, int position) {
     if (*head == NULL) {
         printf("List is empty\n");
@@ -109,7 +103,6 @@ void deleteAtPosition(struct Node** head, int position) {
     temp->next = next;
 }
 
-// Function to print the LinkedList
 void print(struct Node* head) {
     struct Node* temp = head;
     while (temp != NULL) {
@@ -119,7 +112,6 @@ void print(struct Node* head) {
     printf("NULL\n");
 }
 
-// Driver Code with menu-driven program
 int main() {
     struct Node* head = NULL;
     int choice, data, position;
