@@ -1,0 +1,112 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+struct Node* newNode(int value)
+{
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->data = value;
+    newNode->right = newNode->left = NULL;
+    return newNode;
+};
+
+struct Node* insertNode(struct Node* node, int value)
+{
+    if(node == NULL)
+    {
+        return newNode(value);
+    }
+    if(value<node->data)
+    {
+        node->left = insertNode(node->left,value);
+    }
+    else if (value>node->data)
+    {
+        node->right = insertNode(node->right,value);
+
+    }
+
+    return node;
+};
+
+void preOrder(struct Node* root)
+{
+    if(root!=NULL)
+    {
+        printf("%d \t",root->data);
+        preOrder(root->left);
+        preOrder(root->right);
+    }
+}
+
+void postOrder(struct Node* root)
+{
+    if(root!=NULL)
+    {
+        postOrder(root->left);
+        postOrder(root->right);
+        printf("%d \t",root->data);
+    }
+}
+
+void inOrder(struct Node* root)
+{
+    if(root!=NULL)
+    {
+        inOrder(root->left);
+        printf("%d \t", root->data);
+        inOrder(root->right);
+    }
+}
+
+int main()
+{
+    struct Node* root = NULL;
+    int choice;
+    int value;
+
+    do
+    {
+        printf("1.insert\n");
+    printf("2.preorder\n");
+    printf("3.postorder\n");
+    printf("4.inorder\n");
+    printf("5.exit\n");
+
+    printf("enter your choice: ");
+    scanf("%d",&choice);
+        switch(choice)
+        {
+        case 1:
+            printf("enter the value to insert:");
+            scanf("%d",&value);
+            root = insertNode(root,value);
+            break;
+
+        case 2:
+            preOrder(root);
+            break;
+
+        case 3:
+            postOrder(root);
+            break;
+
+        case 4:
+            inOrder(root);
+            break;
+
+        case 5:
+            exit(0);
+            break;
+        }
+    }while(choice!=5);
+
+
+
+}
