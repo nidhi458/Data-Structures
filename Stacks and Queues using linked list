@@ -1,0 +1,129 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct node {
+    int data;
+    struct node *next;
+} Node;
+
+
+void enqueue(Node **front, Node **rear, int val) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = val;
+    newNode->next = NULL;
+
+    if (*front == NULL && *rear == NULL) {
+        *front = *rear = newNode;
+    } else {
+        (*rear)->next = newNode;
+        *rear = newNode;
+    }
+}
+
+void dequeue(Node **front, Node **rear) {
+    Node *temp;
+    if (*front == NULL) {
+        printf("Queue is Empty. Unable to perform dequeue\n");
+    } else {
+        temp = *front;
+        *front = (*front)->next;
+        if (*front == NULL) {
+            *rear = NULL;
+        }
+        free(temp);
+    }
+}
+
+void printQueue(Node *front) {
+    Node *temp = front;
+    printf("Queue: ");
+    while (temp) {
+        printf("%d->", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+
+void push(Node **head, int val) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = val;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void pop(Node **head) {
+    Node *temp;
+    if (*head == NULL) {
+        printf("Stack is Empty\n");
+    } else {
+        printf("Popped element = %d\n", (*head)->data);
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+}
+
+void printStack(Node *head) {
+    Node *temp = head;
+    printf("Stack: ");
+    while (temp) {
+        printf("%d->", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    Node *queueFront = NULL, *queueRear = NULL; 
+    Node *stackHead = NULL;                      
+    int choice, value;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Enqueue in Queue\n");
+        printf("2. Dequeue from Queue\n");
+        printf("3. Display Queue\n");
+        printf("4. Push to Stack\n");
+        printf("5. Pop from Stack\n");
+        printf("6. Display Stack\n");
+        printf("7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter a value to enqueue in Queue: ");
+                scanf("%d", &value);
+                enqueue(&queueFront, &queueRear, value);
+                break;
+            case 2:
+                printf("Dequeueing from Queue...\n");
+                dequeue(&queueFront, &queueRear);
+                break;
+            case 3:
+                printQueue(queueFront);
+                break;
+            case 4:
+                printf("Enter a value to push to Stack: ");
+                scanf("%d", &value);
+                push(&stackHead, value);
+                break;
+            case 5:
+                printf("Popping from Stack...\n");
+                pop(&stackHead);
+                break;
+            case 6:
+                printStack(stackHead);
+                break;
+            case 7:
+                printf("Exiting program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 7);
+
+    return 0;
+}
